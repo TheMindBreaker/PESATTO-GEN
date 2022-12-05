@@ -1,0 +1,36 @@
+{
+  "login": {
+    "method": "login",
+    "result":
+    {
+      "register": 1,
+      "historic": "192.168.0.194:81",
+      "liveData": "192.168.0.194:81",
+      "realTime": "UTC",
+      "para_command": "01030000005045F6; 01030000005045F6",
+      "con_command": "01030000005045F6; 01030000005045F6",
+      "online_rate": 3000,
+      "offline_rate": 3000,
+      "modulePort": 2,
+      "moduleBaud": 0
+    },
+    "retcode": "000000"
+  },
+  "loginFail": {
+    "method": "login",
+    "result":
+    {
+      "register": 0,
+      "historic": "192.168.0.194:91",
+      "liveData": "192.168.0.194:91",
+      "realTime": "UTC",
+      "para_command": "01030000005045F6; 01030000005045F6",
+      "con_command": "01030000005045F6; 01030000005045F6",
+      "online_rate": 5000,
+      "offline_rate": 5000,
+      "modulePort": 2,
+      "moduleBaud": 0
+    },
+    "retcode": "000000"
+  }
+}

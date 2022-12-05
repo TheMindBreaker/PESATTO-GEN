@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""/><script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<style>
+    #map{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+
+<script>
+    function openOther(values) {
+        console.log(values)
+    }
+</script>
+
+
+<div class="col-12">
+    <div id = "map"></div>
+
+    <div class="col-2">
+
+        <div class="card" style="margin-top: 1.3rem; margin-left: .3rem; width: 20rem">
+            <h4 class="card-header">Dispositivos</h4>
+            <div class="card-body" style="height: 40rem">
+                <ol class="list-group list-group-numbered list-group-flush">
+                    <script>
+                        const map = L.map('map').setView([24.247, -107.952], 6);
+
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                    </script>
+                    {{#each rows}}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{this.uniqId}}</div>
+                                L. Socket: {{this.lastSocket}} <br/>
+                                L. IP: {{this.lastIP}}
+                            </div>
+                            {{#if this.status}}
+                                <span class="btn btn-success btn-sm badge"> </span>
+                            {{else}}
+                                <span class="btn btn-danger btn-sm badge"> </span>
+                            {{/if}}
+
+                        </li>
+                        <script>
+
+
+                            L.marker([{{this.longitude}}, {{this.latitude}}]).addTo(map).on('mouseover', function(e) {
+                                console.log(e.latlng);
+                            });
+
+                        </script>
+                    {{/each}}
+
+
+                </ol>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+

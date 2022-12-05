@@ -1,0 +1,32 @@
+{
+  "name": "pesatto-gen",
+  "version": "1.0.0",
+  "description": "Pesatto Monitoring System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMindBreaker/PESATTO-GEN.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheMindBreaker/PESATTO-GEN/issues"
+  },
+  "homepage": "https://github.com/TheMindBreaker/PESATTO-GEN#readme",
+  "dependencies": {
+    "@hapi/hapi": "^21.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "hbs": "^4.2.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20",
+    "ruptela": "^1.0.2",
+    "simple-node-logger": "^21.8.12"
+  }
+}

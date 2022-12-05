@@ -1,0 +1,36 @@
+{
+  "server": {
+    "port": 91,
+    "hostname": "0.0.0.0",
+    "checkIfDies": 200000,
+    "log": "trace"
+  },
+  "db": {
+    "host": "construtec.mx",
+    "user": "pesatto_gen",
+    "password": "9u7nE&2j",
+    "database": "pesatto_gen"
+  },
+  "protocols": [
+    {
+      "name": "ruptela",
+      "enable": false,
+      "port": 5001
+    },
+    {
+      "name": "teltonika",
+      "enable": false,
+      "port": 5002
+    },
+    {
+      "name": "smartgenCMM",
+      "enable": true,
+      "port": 5003
+    },
+    {
+      "name": "smartgenHGM",
+      "enable": false,
+      "port": 5004
+    }
+  ]
+}
