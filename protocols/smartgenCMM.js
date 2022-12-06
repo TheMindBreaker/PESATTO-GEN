@@ -8,7 +8,9 @@ let server = net.createServer();
 const SimpleNodeLogger = require('simple-node-logger'),
     opts = {logFilePath:'./files/SmartGenCMM.log', timestampFormat:'YYYY-MM-DD HH:mm:ss',},
     log = SimpleNodeLogger.createSimpleLogger( opts );
+const reqdata = require("./SMARTGEN/reqdata");
 
+log.setLevel("all")
 let sockets = [];
 
 server.on("connection", (socket) => {
@@ -24,11 +26,35 @@ server.on("connection", (socket) => {
                     let login = require("./SMARTGEN/login")
                     login(params,log,socket, response => {
                         if(response.success){
+                            log.info("LOGIN FROM : ",socket.remotePort)
+                            log.info(response)
                             sockets.push([socket.remotePort,socket,response.device]);
                         }
-                        let me = Buffer.from(JSON.stringify(response.message));
-                        log.info(me);
-                        socket.write(me)
+                        socket.write(JSON.stringify(response.message))
+                    })
+                    break
+                case"LongCon":
+                    let longcon = require("./SMARTGEN/longcon");
+                    longcon(params,log,(response)=> {
+                        if(response.success) {
+                            log.info("LONGCON FROM : ",socket.remotePort);
+                            log.info(response);
+                            socket.write(JSON.stringify(response.message))
+                        }
+                    })
+                    break
+                case "reqdata":
+                    let reqdata = require("./SMARTGEN/reqdata");
+                    reqdata(params,log,(response) => {
+                        socket.write(JSON.stringify(response.message))
+                    })
+                    break
+                case "HB":
+                    let hb = require("./SMARTGEN/hb");
+                    hb(params,log,(response) => {
+                        log.info("HB FROM : ",socket.remotePort);
+                        log.info(response);
+                        socket.write(JSON.stringify(response.message))
                     })
                     break
                 default:

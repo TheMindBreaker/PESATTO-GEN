@@ -1,5 +1,5 @@
 const db = require("../../dbcon");
-
+const config = require('../../config.json');
 
 function init(params, logging, socket, callback) {
     logging.info(params)
@@ -17,11 +17,11 @@ function init(params, logging, socket, callback) {
                 "result":
                     {
                         "register": 0,
-                        "historic": "f3530f55fe70.sn.mynetname.net:5003",
-                        "liveData": "f3530f55fe70.sn.mynetname.net:5003",
+                        historic: config.server.protocol +":"+ config.protocols[2].port,
+                        liveData: config.server.protocol +":"+ config.protocols[2].port,
                         "realTime": new Date().getTime(),
-                        "para_command": "01030000005045F6; 01030000005045F6",
-                        "con_command": "01030000005045F6; 01030000005045F6",
+                        para_command: "01030000005045F6;0101000000503C36",
+                        con_command: "01030000005045F6;0101000000503C36",
                         "online_rate": 5000,
                         "offline_rate": 5000,
                         "modulePort": 4,
@@ -42,21 +42,20 @@ function init(params, logging, socket, callback) {
                 result:
                     {
                         register: 1,
-                        historic: "f3530f55fe70.sn.mynetname.net:5004",
-                        liveData: "f3530f55fe70.sn.mynetname.net:5003",
+                        historic: config.server.protocol +":"+ config.protocols[2].port,
+                        liveData: config.server.protocol +":"+ config.protocols[2].port,
                         realTime: new Date().getTime(),
-                        para_command: "01010000001C3DC3;01030000005045F6;",
-                        con_command: "01010000001C3DC3;01030000005045F6;",
+                        para_command: "01030000005045F6;0101000000503C36",
+                        con_command: "01030000005045F6;0101000000503C36",
                         online_rate: 5,
                         offline_rate: 5,
                         data_mode:1,
                         moduletype:"HGM6120N",
-                        modulePort:params.params.modulePort,
+                        modulePort:4,
                         moduleBaud:params.params.moduleBaud,
                     },
                 retcode: "000000"
             };
-            logging.info(response);
             callback(response)
         }
 
