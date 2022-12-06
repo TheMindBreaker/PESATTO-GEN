@@ -12,7 +12,6 @@ const services = [];
 config.protocols.forEach(protocol => {
     if(protocol.enable){
         services.push(require("./protocols/"+protocol.name));
-        protocol.enable = false;
     }
 })
 
