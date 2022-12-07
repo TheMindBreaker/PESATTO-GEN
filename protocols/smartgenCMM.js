@@ -8,7 +8,6 @@ let server = net.createServer();
 const SimpleNodeLogger = require('simple-node-logger'),
     opts = {logFilePath:'./files/SmartGenCMM.log', timestampFormat:'YYYY-MM-DD HH:mm:ss',},
     log = SimpleNodeLogger.createSimpleLogger( opts );
-const reqdata = require("./SMARTGEN/reqdata");
 
 log.setLevel("all")
 let sockets = [];
@@ -28,7 +27,7 @@ server.on("connection", (socket) => {
                         if(response.success){
                             log.info("LOGIN FROM : ",socket.remotePort)
                             log.info(response)
-                            sockets.push([socket.remotePort,socket,response.device]);
+                            sockets.push([socket.remotePort,socket,response.device,response.deviceID]);
                         }
                         socket.write(JSON.stringify(response.message))
                     })
@@ -45,7 +44,7 @@ server.on("connection", (socket) => {
                     break
                 case "reqdata":
                     let reqdata = require("./SMARTGEN/reqdata");
-                    reqdata(params,log,(response) => {
+                    reqdata(params,log,sockets[lookForIndexDeviceId(sockets,params.hostid)],(response) => {
                         socket.write(JSON.stringify(response.message))
                     })
                     break

@@ -6,6 +6,7 @@ function init(params, logging, socket, callback) {
     let response = {
         device:"",
         message:"",
+        deviceID:null,
         success: false
     }
     db.query("SELECT * FROM devices WHERE uniqId = ?", [params.params.hostid],(error,result) => {
@@ -22,8 +23,8 @@ function init(params, logging, socket, callback) {
                         "realTime": new Date().getTime(),
                         para_command: "01030000005045F6;0101000000503C36",
                         con_command: "01030000005045F6;0101000000503C36",
-                        "online_rate": 5000,
-                        "offline_rate": 5000,
+                        "online_rate": 15,
+                        "offline_rate": 15,
                         "modulePort": 4,
                         "moduleBaud": 0
                     },
@@ -37,6 +38,7 @@ function init(params, logging, socket, callback) {
             logging.info("DEVICE CONNECTED TO SERVER AS ",result[0].uniqId)
             response.success = true;
             response.device = result[0].uniqId;
+            response.deviceID = result[0].id;
             response.message = {
                 method: "login",
                 result:
@@ -47,8 +49,8 @@ function init(params, logging, socket, callback) {
                         realTime: new Date().getTime(),
                         para_command: "01030000005045F6;0101000000503C36",
                         con_command: "01030000005045F6;0101000000503C36",
-                        online_rate: 5,
-                        offline_rate: 5,
+                        online_rate: 15,
+                        offline_rate: 15,
                         data_mode:1,
                         moduletype:"HGM6120N",
                         modulePort:4,
