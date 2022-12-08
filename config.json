@@ -12,6 +12,9 @@
     "password": "9u7nE&2j",
     "database": "pesatto_gen"
   },
+  "mongo": {
+    "url": "mongodb+srv://platform:3qwcmSwHWfoMgUjV@cluster0.robao.mongodb.net/pesatto_gms"
+  },
   "protocols": [
     {
       "name": "ruptela",

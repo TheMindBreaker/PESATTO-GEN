@@ -1,88 +1,75 @@
-const db = require("../../../dbcon");
-function addValues(params,device, logging) {
-    const deviceId = 1;
-    logging.warn("DB ADD : ",device)
-    db.query("INSERT INTO pesatto_gen.device_values(" +
-        "deviceId, " +
-        "timeStamp, " +
-        "MAIN_AU, MAIN_AB, MAIN_AC, " +
-        "MAIN_UAB, MAIN_UBC, MAIN_UCA," +
-        " MAIN_FREC, " +
-        "GEN_UA, GEN_UB, GEN_UC, " +
-        "GEN_UAB, GEN_UBC, GEN_UCA, " +
-        "GEN_FREC, " +
-        "A_PHACE_CURRENT, B_PHACE_CURRENT, C_PHACE_CURRENT, " +
-        "WATER_TEMP, OIL_PREASURE, FUEL_LEVEL, SPEED, BATTERY_VOLTAGE, " +
-        "ACTIVE_POWER, REACTIVE_POWER, APPARENT_POWER, POWER_FACTOR, " +
-        "CONTROLLER_RUNNING_STATUS, AUTO_RUNNING_STATUS, ATS_RUNNING_STATUS, MAIN_STATUS, " +
-        "OIL_ENGINE_RUN_ACCUM_MSB, OIL_ENGINE_RUN_ACCUM_LSB, OIL_ENGINE_RUN_ACCUM_MIN, OIL_ENGINE_RUN_ACCUM_SEC, " +
-        "ACCUM_START_TIMES_MSB, ACCUM_START_TIMES_LSB, ACCUM_ENERGY_MSB, ACCUM_ENERGY_LSB, " +
-        "A_PHACE_ACTIVE_POWER, B_PHACE_ACTIVE_POWER, C_PHACE_ACTIVE_POWER, LOAD_OUTPUT_PERCENTAGE, " +
-        "AIR_FUEL_RATIO, THROTTLE_PERVENTAGE, OIL_TEMP, COOLANT_PRESSURE, " +
-        "FUEL_PRESSURE, FUEL_TEMP, INLET_TEMP, EXHAUST_TEMP, TURBO_PRESSURE, " +
-        "FUEL_CONSUMPTION, INLET_PRESSURE, CONTROLLER_MODEL) VALUES " +
-        "(?, current_timestamp, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-        [deviceId,
-            params[0],
-            params[1],
-            params[2],
-            params[3],
-            params[4],
-            params[5],
-            params[6],
-            params[7],
-            params[8],
-            params[9],
-            params[10],
-            params[11],
-            params[12],
-            params[13],
-            params[14],
-            params[15],
-            params[16],
-            params[17],
-            params[19],
-            params[21],
-            params[23],
-            params[24],
-            params[26],
-            params[27],
-            params[28],
-            params[29],
-            params[34],
-            params[36],
-            params[38],
-            params[40],
-            params[42],
-            params[43],
-            params[44],
-            params[45],
-            params[46],
-            params[47],
-            params[48],
-            params[49],
-            params[52],
-            params[53],
-            params[54],
-            params[55],
-            params[56],
-            params[57],
-            params[59],
-            params[60],
-            params[61],
-            params[62],
-            params[63],
-            params[64],
-            params[65],
-            params[66],
-            params[67],
-            params[71]],(err, result) => {
-            if(err) {
-                logging.warning("DB ERROR DEVICE VALUES : ",err)
-            }
+const device_values = require("../../../schemas/device_values");
+const device_data = require("../../../schemas/device");
+
+
+module.exports = (params,device, logging) => {
+        device_data.model.findOne({IDENTIFIER: device}, (err, div) => {
+                let data = {
+                        UPDATED: Date.now(),
+                        deviceId: div._id,
+                        CALL: params.toString(),
+                        MAIN_AU: params[0],
+                        MAIN_AB: params[1],
+                        MAIN_AC: params[2],
+                        MAIN_UAB: params[3],
+                        MAIN_UBC: params[4],
+                        MAIN_UCA: params[5],
+                        MAIN_FREC: params[6],
+                        GEN_UA: params[7],
+                        GEN_UB: params[8],
+                        GEN_UC: params[9],
+                        GEN_UAB: params[10],
+                        GEN_UBC: params[11],
+                        GEN_UCA: params[12],
+                        GEN_FREC: params[13],
+                        A_PHACE_CURRENT: params[14],
+                        B_PHACE_CURRENT: params[15],
+                        C_PHACE_CURRENT: params[16],
+                        WATER_TEMP: params[17],
+                        OIL_PREASURE: params[19],
+                        FUEL_LEVEL: params[21],
+                        SPEED: params[23],
+                        BATTERY_VOLTAGE: params[24],
+                        ACTIVE_POWER: params[26],
+                        REACTIVE_POWER: params[27],
+                        APPARENT_POWER: params[28],
+                        POWER_FACTOR: params[29],
+                        CONTROLLER_RUNNING_STATUS: params[34],
+                        AUTO_RUNNING_STATUS: params[36],
+                        ATS_RUNNING_STATUS: params[38],
+                        MAIN_STATUS: params[40],
+                        OIL_ENGINE_RUN_ACCUM_MSB: params[42],
+                        OIL_ENGINE_RUN_ACCUM_LSB: params[43],
+                        OIL_ENGINE_RUN_ACCUM_MIN: params[44],
+                        OIL_ENGINE_RUN_ACCUM_SEC: params[45],
+                        ACCUM_START_TIMES_MSB: params[46],
+                        ACCUM_START_TIMES_LSB: params[47],
+                        ACCUM_ENERGY_MSB: params[48],
+                        ACCUM_ENERGY_LSB: params[49],
+                        A_PHACE_ACTIVE_POWER: params[52],
+                        B_PHACE_ACTIVE_POWER: params[53],
+                        C_PHACE_ACTIVE_POWER: params[54],
+                        LOAD_OUTPUT_PERCENTAGE: params[55],
+                        AIR_FUEL_RATIO: params[56],
+                        THROTTLE_PERVENTAGE: params[57],
+                        OIL_TEMP: params[59],
+                        COOLANT_PRESSURE: params[60],
+                        FUEL_PRESSURE: params[61],
+                        FUEL_TEMP: params[62],
+                        INLET_TEMP: params[63],
+                        EXHAUST_TEMP: params[64],
+                        TURBO_PRESSURE: params[65],
+                        FUEL_CONSUMPTION: params[66],
+                        INLET_PRESSURE: params[67],
+                        CONTROLLER_MODEL: params[71]
+                }
+                let values = new device_values.model(data);
+
+                values.save().then(r => {
+                        device_data.model.findOneAndUpdate({_id:div._id}, {DEVICE_VALUE:data} ,(err,result) => {
+                                //console.log(result);
+                        });
+                });
         })
 
-
 }
-
-module.exports = addValues;

@@ -7,7 +7,7 @@ let response = {
 }
 
 
-function init(params, logging,device,callback) {
+function init(params, logging,callback) {
 
     logging.info("REQDATA :",params);
     let data = params.params.split(";");
@@ -20,7 +20,7 @@ function init(params, logging,device,callback) {
                     Modbus.ReadCoils.Response.parse(Buffer.from(realInfo,"hex"));
                     break
                 case "03":
-                    device_values(Modbus.ReadHoldingRegisters.Response.parse(Buffer.from(realInfo,"hex")).map(res => parseInt(res.toString("hex"),16)),device,logging);
+                    device_values(Modbus.ReadHoldingRegisters.Response.parse(Buffer.from(realInfo,"hex")).map(res => parseInt(res.toString("hex"),16)),params.hostid,logging);
                     break
 
             }

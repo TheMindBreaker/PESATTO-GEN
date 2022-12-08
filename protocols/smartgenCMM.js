@@ -8,9 +8,11 @@ let server = net.createServer();
 const SimpleNodeLogger = require('simple-node-logger'),
     opts = {logFilePath:'./files/SmartGenCMM.log', timestampFormat:'YYYY-MM-DD HH:mm:ss',},
     log = SimpleNodeLogger.createSimpleLogger( opts );
+const {response} = require("express");
 
-log.setLevel("all")
+log.setLevel("error")
 let sockets = [];
+let clients = {};
 
 server.on("connection", (socket) => {
     socket.setKeepAlive(true);
@@ -20,10 +22,11 @@ server.on("connection", (socket) => {
     socket.on("data", function (data) {
         try {
             let params = JSON.parse(data.toString());
+            existsNotLogin(socket,params.hostid,params);
             switch (params.method) {
                 case "login":
                     let login = require("./SMARTGEN/login")
-                    login(params,log,socket, response => {
+                    login.init(params,log,socket, response => {
                         if(response.success){
                             log.info("LOGIN FROM : ",socket.remotePort)
                             log.info(response)
@@ -44,7 +47,7 @@ server.on("connection", (socket) => {
                     break
                 case "reqdata":
                     let reqdata = require("./SMARTGEN/reqdata");
-                    reqdata(params,log,sockets[lookForIndexDeviceId(sockets,params.hostid)],(response) => {
+                    reqdata(params,log,(response) => {
                         socket.write(JSON.stringify(response.message))
                     })
                     break
@@ -68,8 +71,31 @@ server.on("connection", (socket) => {
         }
     })
 
+    socket.on("error", () => {
+        let login = require("./SMARTGEN/login")
+        login.logout(socket.remotePort,socket.remoteAddress,clients[socket.remotePort].id)
+        delete clients[socket.remotePort];
+    })
+
 })
 
+function existsNotLogin(sock, hostId, params) {
+    if(clients[sock.remotePort]) {
+
+    }else {
+        let login = require("./SMARTGEN/login")
+        login.extInit(params,sock,res => {
+            if(res.success) {
+                clients[sock.remotePort] = {
+                    port: sock.remotePort,
+                    device: res.device,
+                    id: res.deviceID,
+                    socket: sock
+                }
+            }
+        })
+    }
+}
 function lookForIndexSocket(array, key) {
     for (const [i, value] of array.entries()) {
         if(value[0] == key){
@@ -93,11 +119,3 @@ server.on("listening", () => {
 
 server.listen(config.protocols[2].port,config.server.hostname);
 
-
-const requestListener = function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(sockets));
-}
-
-const web = http.createServer(requestListener);
-web.listen(8080);

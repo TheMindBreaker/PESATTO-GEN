@@ -1,17 +1,16 @@
-const db = require("../../dbcon");
+const device = require('../../schemas/device');
 const config = require('../../config.json');
-
+let response = {
+    device:"",
+    message:"",
+    deviceID:null,
+    success: false
+}
 function init(params, logging, socket, callback) {
     logging.info(params)
-    let response = {
-        device:"",
-        message:"",
-        deviceID:null,
-        success: false
-    }
-    db.query("SELECT * FROM devices WHERE uniqId = ?", [params.params.hostid],(error,result) => {
 
-        if(result.length!=1) {
+    device.model.find({IDENTIFIER: params.params.hostid},(err,docs) => {
+        if(docs.length<1) {
             response.success = false;
             response.message = JSON.stringify({
                 "method": "login",
@@ -33,12 +32,17 @@ function init(params, logging, socket, callback) {
             callback(response);
         }
         else {
-            db.query("UPDATE devices SET status=1,lastIP=?,lastSocket=? WHERE id=?",[socket.remoteAddress,socket.remotePort,result[0].id],(err,res)=>{})
+            device.model.update({_id: docs[0]._id},{
+                LAST_SOCKET: socket.remotePort,
+                LAST_IP:socket.remoteAddress,
+                LAST_CON: Date.now(),
+                STATUS: true
+            })
 
-            logging.info("DEVICE CONNECTED TO SERVER AS ",result[0].uniqId)
+            logging.info("DEVICE CONNECTED TO SERVER AS ",docs[0].IDENTIFIER)
             response.success = true;
-            response.device = result[0].uniqId;
-            response.deviceID = result[0].id;
+            response.device = docs[0].IDENTIFIER;
+            response.deviceID = docs[0].ObjectID;
             response.message = {
                 method: "login",
                 result:
@@ -61,9 +65,39 @@ function init(params, logging, socket, callback) {
             callback(response)
         }
 
-    })
+    });
+
 }
 
 
 
-module.exports = init;
+module.exports.init = init;
+module.exports.extInit = (params, socket, callback) => {
+    device.model.find({IDENTIFIER: params.hostid},(err,docs) => {
+        if(docs.length<1) {
+            response.success= false;
+            callback(response)
+        } else {
+            device.model.updateOne({_id: docs[0]._id},{
+                LAST_SOCKET: socket.remotePort,
+                LAST_IP:socket.remoteAddress,
+                LAST_CON: Date.now(),
+                STATUS: true
+            })
+            response.success=true;
+            response.device = docs[0].IDENTIFIER;
+            response.deviceID = docs[0]._id.toString();
+            callback(response)
+        }
+
+    });
+};
+
+module.exports.logout = (port,address, id) => {
+    device.model.updateOne({_id: id},{
+        LAST_SOCKET: socket.remotePort,
+        LAST_IP:socket.remoteAddress,
+        LAST_CON: Date.now(),
+        STATUS: false
+    })
+}

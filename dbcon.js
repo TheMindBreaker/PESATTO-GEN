@@ -1,9 +1,10 @@
-const mysql = require('mysql');
 const config = require('./config.json');
-const connection = mysql.createConnection(config.db);
+const mongoose = require('mongoose');
+let conn = null;
 
-connection.connect(function(err) {
-    if (err) throw err;
-});
+mongoose.set('strictQuery', true)
+mongoose.connect(config.mongo.url, {
+            serverSelectionTimeoutMS: 5000
+        }).then(() => mongoose);
 
-module.exports = connection;
+module.exports = mongoose;
