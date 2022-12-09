@@ -1,7 +1,5 @@
 const net = require("net");
 const config = require("../config.json");
-const http = require("http");
-const db = require("../dbcon");
 let server = net.createServer();
 
 
@@ -10,7 +8,7 @@ const SimpleNodeLogger = require('simple-node-logger'),
     log = SimpleNodeLogger.createSimpleLogger( opts );
 const {response} = require("express");
 
-log.setLevel("error")
+log.setLevel("all")
 let sockets = [];
 let clients = {};
 
@@ -30,7 +28,6 @@ server.on("connection", (socket) => {
                         if(response.success){
                             log.info("LOGIN FROM : ",socket.remotePort)
                             log.info(response)
-                            sockets.push([socket.remotePort,socket,response.device,response.deviceID]);
                         }
                         socket.write(JSON.stringify(response.message))
                     })
