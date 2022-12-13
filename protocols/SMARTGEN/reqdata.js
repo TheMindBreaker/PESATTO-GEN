@@ -1,5 +1,6 @@
 const Modbus = require("modbus-pdu");
 const device_values = require("./db/device_values");
+const device_inputs = require("./db/device_inputs");
 let response = {
     device:"",
     message:{method: "reqdata",message: "OK",retcode: "000000"},
@@ -17,7 +18,7 @@ function init(params, logging,callback) {
             realInfo = realInfo.slice(0, -4);
             switch (realInfo.slice(0,2)) {
                 case "01":
-                    Modbus.ReadCoils.Response.parse(Buffer.from(realInfo,"hex"));
+                    device_inputs(Modbus.ReadCoils.Response.parse(Buffer.from(realInfo,"hex")),params.hostid,logging);
                     break
                 case "03":
                     device_values(Modbus.ReadHoldingRegisters.Response.parse(Buffer.from(realInfo,"hex")).map(res => parseInt(res.toString("hex"),16)),params.hostid,logging);

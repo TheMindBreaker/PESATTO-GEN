@@ -19,8 +19,8 @@ let device_value = new Schema(
             default: Date.now()
         },
         MAIN_AU: {
-            type: String,
-            default: "",
+            type: Number,
+            default: 0,
         },
         MAIN_AB: {
             type: Number,

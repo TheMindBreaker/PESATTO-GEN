@@ -4,7 +4,7 @@
     "hostname": "0.0.0.0",
     "checkIfDies": 200000,
     "log": "trace",
-    "protocol": "f3530f55fe70.sn.mynetname.net"
+    "protocol": "192.168.8.5"
   },
   "db": {
     "host": "construtec.mx",

@@ -2,31 +2,30 @@ const net = require("net");
 const config = require("../config.json");
 let server = net.createServer();
 
-
 const SimpleNodeLogger = require('simple-node-logger'),
-    opts = {logFilePath:'./files/SmartGenCMM.log', timestampFormat:'YYYY-MM-DD HH:mm:ss',},
-    log = SimpleNodeLogger.createSimpleLogger( opts );
+    opts = {logFilePath: './files/SmartGenCMM.log', timestampFormat: 'YYYY-MM-DD HH:mm:ss',},
+    log = SimpleNodeLogger.createSimpleLogger(opts);
 const {response} = require("express");
+const login = require("./SMARTGEN/login");
+const commands = require("../schemas/commands");
+const reqdata = require("./SMARTGEN/reqdata");
 
-log.setLevel("all")
-let sockets = [];
+log.setLevel("warn")
 let clients = {};
 
 server.on("connection", (socket) => {
+    log.info("NEW CONNECTION: ", socket.remoteAddress, ":", socket.remotePort);
     socket.setKeepAlive(true);
-
-    log.info("NEW CONNECTION: ", socket.remoteAddress,":",socket.remotePort);
-
+    socket.setTimeout(10000);
     socket.on("data", function (data) {
         try {
             let params = JSON.parse(data.toString());
-            existsNotLogin(socket,params.hostid,params);
+            existsNotLogin(socket, params.hostid, params);
             switch (params.method) {
                 case "login":
-                    let login = require("./SMARTGEN/login")
-                    login.init(params,log,socket, response => {
-                        if(response.success){
-                            log.info("LOGIN FROM : ",socket.remotePort)
+                    login.init(params, log, socket, response => {
+                        if (response.success) {
+                            log.info("LOGIN FROM : ", socket.remotePort)
                             log.info(response)
                         }
                         socket.write(JSON.stringify(response.message))
@@ -34,9 +33,9 @@ server.on("connection", (socket) => {
                     break
                 case"LongCon":
                     let longcon = require("./SMARTGEN/longcon");
-                    longcon(params,log,(response)=> {
-                        if(response.success) {
-                            log.info("LONGCON FROM : ",socket.remotePort);
+                    longcon(params, log, (response) => {
+                        if (response.success) {
+                            log.info("LONGCON FROM : ", socket.remotePort);
                             log.info(response);
                             socket.write(JSON.stringify(response.message))
                         }
@@ -44,21 +43,25 @@ server.on("connection", (socket) => {
                     break
                 case "reqdata":
                     let reqdata = require("./SMARTGEN/reqdata");
-                    reqdata(params,log,(response) => {
+                    reqdata(params, log, (response) => {
                         socket.write(JSON.stringify(response.message))
                     })
                     break
+                case "writeConfig":
+                    let writeConfig = require("./SMARTGEN/writeconfig");
+                    writeConfig(params, log, (response) => {})
+                    break
                 case "HB":
                     let hb = require("./SMARTGEN/hb");
-                    hb(params,log,(response) => {
-                        log.info("HB FROM : ",socket.remotePort);
+                    hb(params, log, (response) => {
+                        log.info("HB FROM : ", socket.remotePort);
                         log.info(response);
                         socket.write(JSON.stringify(response.message))
                     })
                     break
                 default:
                     let smartGen = require("./SMARTGEN/default")
-                    smartGen(params,log, (response) => {
+                    smartGen(params, log, (response) => {
 
                     });
                     break
@@ -68,51 +71,74 @@ server.on("connection", (socket) => {
         }
     })
 
-    socket.on("error", () => {
-        let login = require("./SMARTGEN/login")
-        login.logout(socket.remotePort,socket.remoteAddress,clients[socket.remotePort].id)
+    socket.on("timeout", () => {
+        login.logout(socket.remotePort, socket.remoteAddress, clients[socket.remotePort].id);
         delete clients[socket.remotePort];
     })
 
+    socket.on("error", (err) => {})
+
+
+})
+server.on("error", (err) => {})
+
+
+let pipeline = [
+    {
+        $match: {
+            $and: [
+                {operationType: 'insert'},
+            ],
+        },
+    },
+];
+
+let options = {fullDocument: 'updateLookup'};
+
+commands.model.watch(pipeline, options).on('change', data => {
+
+
+
+
+    let divId = data.fullDocument.DEVICE;
+    for (const [key, value] of Object.entries(clients)) {
+        if(value.id === divId) {
+            let serv = {
+                method: "writeConfig",
+                result: data.fullDocument.COMMAND,
+                uid: data.fullDocument._id
+            }
+            if(data.fullDocument.STATUS==0) {
+                value.socket.write(JSON.stringify(serv))
+            }
+            break;
+        }
+    }
 })
 
-function existsNotLogin(sock, hostId, params) {
-    if(clients[sock.remotePort]) {
 
-    }else {
-        let login = require("./SMARTGEN/login")
-        login.extInit(params,sock,res => {
-            if(res.success) {
+function existsNotLogin(sock, hostId, params) {
+    if (!clients[sock.remotePort]) {
+        login.extInit(params, sock, res => {
+            if (res.success) {
                 clients[sock.remotePort] = {
                     port: sock.remotePort,
                     device: res.device,
                     id: res.deviceID,
-                    socket: sock
+                    socket: sock,
+                    mod_baud: res.moduleBaud,
+                    mod_port: res.modulePort
                 }
             }
         })
     }
 }
-function lookForIndexSocket(array, key) {
-    for (const [i, value] of array.entries()) {
-        if(value[0] == key){
-            return i
-        }
-    }
-}
-
-function lookForIndexDeviceId(array, key) {
-    for (const [i, value] of array.entries()) {
-        if(value[0] == key){
-            return i
-        }
-    }
-}
 
 server.on("listening", () => {
-    log.info("SERVER LISTENING:",config.server.hostname," : ",config.protocols[2].port);
+    log.info("SERVER LISTENING:", config.server.hostname, " : ", config.protocols[2].port);
 })
 
 
-server.listen(config.protocols[2].port,config.server.hostname);
+server.listen(config.protocols[2].port, config.server.hostname);
+
 

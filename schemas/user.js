@@ -17,6 +17,14 @@ let user = new Schema({
     password: {
         type: String,
         required: [true, 'Plase place a password']
+    },
+    devices: {
+        type: [String],
+        default: [],
+    },
+    role: {
+        type: String,
+        default: "guest"
     }
 });
 

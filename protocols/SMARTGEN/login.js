@@ -83,10 +83,12 @@ module.exports.extInit = (params, socket, callback) => {
                 LAST_IP:socket.remoteAddress,
                 LAST_CON: Date.now(),
                 STATUS: true
-            })
+            },(err,rest)=>{})
             response.success=true;
             response.device = docs[0].IDENTIFIER;
             response.deviceID = docs[0]._id.toString();
+            response.moduleBaud = docs[0].MODULE_BAUD;
+            response.modulePort = docs[0].MODULE_PORT;
             callback(response)
         }
 
@@ -95,9 +97,10 @@ module.exports.extInit = (params, socket, callback) => {
 
 module.exports.logout = (port,address, id) => {
     device.model.updateOne({_id: id},{
-        LAST_SOCKET: socket.remotePort,
-        LAST_IP:socket.remoteAddress,
+        LAST_SOCKET: port,
+        LAST_IP:address,
         LAST_CON: Date.now(),
         STATUS: false
+    },(err,rest) => {
     })
 }
