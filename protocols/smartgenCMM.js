@@ -8,9 +8,8 @@ const SimpleNodeLogger = require('simple-node-logger'),
 const {response} = require("express");
 const login = require("./SMARTGEN/login");
 const commands = require("../schemas/commands");
-const reqdata = require("./SMARTGEN/reqdata");
 
-log.setLevel("warn")
+log.setLevel("all")
 let clients = {};
 
 server.on("connection", (socket) => {
