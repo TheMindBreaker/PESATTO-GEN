@@ -14,7 +14,7 @@ module.exports.api = (app) => {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.json());
     app.use(cors({
-        origin: 'localhost:4200'
+        origin: '*'
     }));
 
 
