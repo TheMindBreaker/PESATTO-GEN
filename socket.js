@@ -7,7 +7,7 @@ const serverOpts = {
 };
 const https = require('https');
 const server = https.createServer(serverOpts, app2);
-const io = require('socket.io').listen(server);
+const io = require('socket.io')(server);
 const device = require('./schemas/device');
 const {api} = require("./api");
 
