@@ -9,7 +9,7 @@ const {api} = require("./api");
 
 
 module.exports = () => {
-    httpServer.listen(5001, "154.212.7.203",() => console.log(`listening on port 5001}`));
+    httpServer.listen(5001, "gms.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
 
