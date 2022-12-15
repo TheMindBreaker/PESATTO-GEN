@@ -134,9 +134,10 @@ app.post("/device/values/:device", (req,res) => {
     device_values.model.find(
         {
             deviceId: req.params.device,
-            UPDATED: new Date(2022, 14, 12),
+            UPDATED: new Date(2022, 12, 7).toUTCString(),
             limit: 100
         }, (err, result) => {
+            console.log(err);
         res.json(result)
     })
 })
