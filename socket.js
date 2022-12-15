@@ -1,13 +1,17 @@
-const express = require('express');
-const app = express();
-const httpServer = require('http').createServer(app);
-const io = require('socket.io')(httpServer, { origins: '*'});
+const https = require('https');
+const fs = require('fs')
+const serverOpts = {
+    key: fs.readFileSync("/etc/letsencrypt/live/socket.pesatto.com/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/socket.pesatto.com/fullchain.pem")
+};
+const server = https.createServer(serverOpts);
+const io = require('socket.io').listen(server);
 const device = require('./schemas/device');
 const {api} = require("./api");
 
 
 module.exports = () => {
-    httpServer.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
+    server.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
 
@@ -41,7 +45,7 @@ module.exports = () => {
 
 
 
-    api(app)
+    api()
 
 }
 

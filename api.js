@@ -6,8 +6,9 @@ const jwt = require("jsonwebtoken");
 const device = require("./schemas/device");
 const commands = require("./schemas/commands");
 const models = require("./schemas/models");
+const app = express();
 
-module.exports.api = (app) => {
+module.exports.api = () => {
 
 
     app.use(morgan('dev'));
