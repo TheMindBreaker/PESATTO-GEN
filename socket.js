@@ -1,18 +1,21 @@
-const https = require('https');
+const app2 = require('express')();
 const fs = require('fs')
 const serverOpts = {
     key: fs.readFileSync("../certificate/privkey.pem"),
     cert: fs.readFileSync("../certificate/fullchain.pem"),
     ca: fs.readFileSync("../certificate/chain.pem")
 };
-const server = https.createServer(serverOpts);
-const io = require('socket.io')(server);
+const https = require('https').createServer(serverOpts, app2);
+
+const io = require('socket.io')(https);
 const device = require('./schemas/device');
 const {api} = require("./api");
 
 
+
+
 module.exports = () => {
-    server.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
+    https.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
 
