@@ -5,17 +5,14 @@ const serverOpts = {
     cert: fs.readFileSync("../certificate/cert.pem"),
     ca: fs.readFileSync("../certificate/chain.pem")
 };
-const https = require('https').createServer(serverOpts, app2);
-
-const io = require('socket.io')(https);
+const https = require('https');
+const server = https.createServer(serverOpts, app2);
+const io = require('socket.io').listen(server);
 const device = require('./schemas/device');
 const {api} = require("./api");
 
-
-
-
 module.exports = () => {
-    https.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
+    server.listen(5001, "socket.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
 
