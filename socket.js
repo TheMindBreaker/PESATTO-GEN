@@ -12,9 +12,10 @@ const {api} = require("./api");
 
 
 module.exports = () => {
+    io.origins('*:*')
     httpServer.listen(5001, "gms.pesatto.com",() => console.log(`listening on port 5001}`));
 
-    io.of('/socket').on('connection', (socket) => {
+    io.on('connection', (socket) => {
 
         socket.join(socket.handshake.headers.devices.toLowerCase().split(","));
     });
