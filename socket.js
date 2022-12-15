@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer, {
-    cors: {origin : '*'},
-    path: '/socket/socket.io'
+    path: '/socket'
 });
 const device = require('./schemas/device');
 const {api} = require("./api");
