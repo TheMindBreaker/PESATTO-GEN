@@ -1,0 +1,170 @@
+{
+  "deviceId": {
+    "type": "String"
+  },
+  "timeStamp": {
+    "type": "Date"
+  },
+  "MAIN_AU": {
+    "type": "Number"
+  },
+  "MAIN_AB": {
+    "type": "Number"
+  },
+  "MAIN_AC": {
+    "type": "Number"
+  },
+  "MAIN_UAB": {
+    "type": "Number"
+  },
+  "MAIN_UBC": {
+    "type": "Number"
+  },
+  "MAIN_UCA": {
+    "type": "Number"
+  },
+  "MAIN_FREC": {
+    "type": "Number"
+  },
+  "GEN_UA": {
+    "type": "Number"
+  },
+  "GEN_UB": {
+    "type": "Number"
+  },
+  "GEN_UC": {
+    "type": "Number"
+  },
+  "GEN_UAB": {
+    "type": "Number"
+  },
+  "GEN_UBC": {
+    "type": "Number"
+  },
+  "GEN_UCA": {
+    "type": "Number"
+  },
+  "GEN_FREC": {
+    "type": "Number"
+  },
+  "A_PHACE_CURRENT": {
+    "type": "Number"
+  },
+  "B_PHACE_CURRENT": {
+    "type": "Number"
+  },
+  "C_PHACE_CURRENT": {
+    "type": "Number"
+  },
+  "WATER_TEMP": {
+    "type": "Number"
+  },
+  "OIL_PREASURE": {
+    "type": "Number"
+  },
+  "FUEL_LEVEL": {
+    "type": "Number"
+  },
+  "SPEED": {
+    "type": "Number"
+  },
+  "BATTERY_VOLTAGE": {
+    "type": "Number"
+  },
+  "ACTIVE_POWER": {
+    "type": "Number"
+  },
+  "REACTIVE_POWER": {
+    "type": "Number"
+  },
+  "APPARENT_POWER": {
+    "type": "Number"
+  },
+  "POWER_FACTOR": {
+    "type": "Number"
+  },
+  "CONTROLLER_RUNNING_STATUS": {
+    "type": "Number"
+  },
+  "AUTO_RUNNING_STATUS": {
+    "type": "Number"
+  },
+  "ATS_RUNNING_STATUS": {
+    "type": "Number"
+  },
+  "MAIN_STATUS": {
+    "type": "Number"
+  },
+  "OIL_ENGINE_RUN_ACCUM_MSB": {
+    "type": "Number"
+  },
+  "OIL_ENGINE_RUN_ACCUM_LSB": {
+    "type": "Number"
+  },
+  "OIL_ENGINE_RUN_ACCUM_MIN": {
+    "type": "Number"
+  },
+  "OIL_ENGINE_RUN_ACCUM_SEC": {
+    "type": "Number"
+  },
+  "ACCUM_START_TIMES_MSB": {
+    "type": "Number"
+  },
+  "ACCUM_START_TIMES_LSB": {
+    "type": "Number"
+  },
+  "ACCUM_ENERGY_MSB": {
+    "type": "Number"
+  },
+  "ACCUM_ENERGY_LSB": {
+    "type": "Number"
+  },
+  "A_PHACE_ACTIVE_POWER": {
+    "type": "Number"
+  },
+  "B_PHACE_ACTIVE_POWER": {
+    "type": "Number"
+  },
+  "C_PHACE_ACTIVE_POWER": {
+    "type": "Number"
+  },
+  "LOAD_OUTPUT_PERCENTAGE": {
+    "type": "Number"
+  },
+  "AIR_FUEL_RATIO": {
+    "type": "Number"
+  },
+  "THROTTLE_PERVENTAGE": {
+    "type": "Number"
+  },
+  "OIL_TEMP": {
+    "type": "Number"
+  },
+  "COOLANT_PRESSURE": {
+    "type": "Number"
+  },
+  "FUEL_PRESSURE": {
+    "type": "Number"
+  },
+  "FUEL_TEMP": {
+    "type": "Number"
+  },
+  "INLET_TEMP": {
+    "type": "Number"
+  },
+  "EXHAUST_TEMP": {
+    "type": "Number"
+  },
+  "TURBO_PRESSURE": {
+    "type": "Number"
+  },
+  "FUEL_CONSUMPTION": {
+    "type": "Number"
+  },
+  "INLET_PRESSURE": {
+    "type": "Number"
+  },
+  "CONTROLLER_MODEL": {
+    "type": "Number"
+  }
+}

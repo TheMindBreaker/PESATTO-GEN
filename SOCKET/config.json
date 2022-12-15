@@ -2,10 +2,15 @@
   "server": {
     "port": 91,
     "hostname": "0.0.0.0",
-    "apiPort": 5000,
-    "socketPort": 5001,
     "checkIfDies": 200000,
-    "log": "trace"
+    "log": "trace",
+    "protocol": "192.168.99.252"
+  },
+  "db": {
+    "host": "construtec.mx",
+    "user": "pesatto_gen",
+    "password": "9u7nE&2j",
+    "database": "pesatto_gen"
   },
   "mongo": {
     "url": "mongodb+srv://platform:3qwcmSwHWfoMgUjV@cluster0.robao.mongodb.net/pesatto_gms"

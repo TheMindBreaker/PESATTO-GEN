@@ -1,0 +1,42 @@
+{
+  "name": "pesatto-gen-protocols",
+  "version": "1.0.0",
+  "description": "Pesatto Monitoring System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMindBreaker/PESATTO-GEN.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheMindBreaker/PESATTO-GEN/issues"
+  },
+  "homepage": "https://github.com/TheMindBreaker/PESATTO-GEN#readme",
+  "dependencies": {
+    "@hapi/hapi": "^21.1.0",
+    "@types/socket.io": "^2.1.10",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "modbus-pdu": "^1.14.0",
+    "modbus-serial": "^8.0.8",
+    "mongodb": "^4.12.1",
+    "mongoose": "^6.8.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "node-crc16": "^2.0.7",
+    "nodemon": "^2.0.20",
+    "ruptela": "^1.0.2",
+    "simple-node-logger": "^21.8.12",
+    "socket.io": "^4"
+  }
+}

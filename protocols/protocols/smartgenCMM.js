@@ -1,12 +1,21 @@
 const net = require("net");
-const config = require("../config.json");
+const config = require("../../SOCKET/config.json");
 let server = net.createServer();
 
 const SimpleNodeLogger = require('simple-node-logger'),
     opts = {logFilePath: './files/SmartGenCMM.log', timestampFormat: 'YYYY-MM-DD HH:mm:ss',},
     log = SimpleNodeLogger.createSimpleLogger(opts);
 const {response} = require("express");
+
+
 const login = require("./SMARTGEN/login");
+const smartGen = require("./SMARTGEN/default")
+const longcon = require("./SMARTGEN/longcon");
+const reqdata = require("./SMARTGEN/reqdata");
+const writeConfig = require("./SMARTGEN/writeconfig");
+const hb = require("./SMARTGEN/hb");
+
+
 const commands = require("../schemas/commands");
 
 log.setLevel("all")
@@ -31,7 +40,6 @@ server.on("connection", (socket) => {
                     })
                     break
                 case"LongCon":
-                    let longcon = require("./SMARTGEN/longcon");
                     longcon(params, log, (response) => {
                         if (response.success) {
                             log.info("LONGCON FROM : ", socket.remotePort);
@@ -41,17 +49,14 @@ server.on("connection", (socket) => {
                     })
                     break
                 case "reqdata":
-                    let reqdata = require("./SMARTGEN/reqdata");
                     reqdata(params, log, (response) => {
                         socket.write(JSON.stringify(response.message))
                     })
                     break
                 case "writeConfig":
-                    let writeConfig = require("./SMARTGEN/writeconfig");
                     writeConfig(params, log, (response) => {})
                     break
                 case "HB":
-                    let hb = require("./SMARTGEN/hb");
                     hb(params, log, (response) => {
                         log.info("HB FROM : ", socket.remotePort);
                         log.info(response);
@@ -59,7 +64,6 @@ server.on("connection", (socket) => {
                     })
                     break
                 default:
-                    let smartGen = require("./SMARTGEN/default")
                     smartGen(params, log, (response) => {
 
                     });

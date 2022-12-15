@@ -1,5 +1,5 @@
-const device = require('../../schemas/device');
-const config = require('../../config.json');
+const device = require('../../../SOCKET/schemas/device');
+const config = require('../../../SOCKET/config.json');
 let response = {
     device:"",
     message:"",

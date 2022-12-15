@@ -1,7 +1,7 @@
 console.log("Ruptela Server is Runnning");
 
 const net = require('net');
-const config = require('../config.json');
+const config = require('../../SOCKET/config.json');
 const fs = require("fs");
 
 const SimpleNodeLogger = require('simple-node-logger'),
