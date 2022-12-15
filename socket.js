@@ -5,7 +5,7 @@ const serverOpts = {
     cert: fs.readFileSync("../certificate/fullchain.pem")
 };
 const server = https.createServer(serverOpts);
-const io = require('socket.io').listen(server);
+const io = require('socket.io')(server);
 const device = require('./schemas/device');
 const {api} = require("./api");
 
