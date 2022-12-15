@@ -1,5 +1,5 @@
 const config = require('../config.json');
-const app2 = require('express')();
+const app2 = require('express')({origin: '*'});
 const https = require('http');
 const server = https.createServer(app2);
 const io = require('socket.io')(server);
