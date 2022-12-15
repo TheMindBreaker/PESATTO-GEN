@@ -2,14 +2,15 @@ const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer, {
-    cors: {origin : '*'}
+    cors: {origin : '*'},
+    path: '/socket/socket.io'
 });
 const device = require('./schemas/device');
 const {api} = require("./api");
 
 
 module.exports = () => {
-    httpServer.listen(5001, "0.0.0.0",() => console.log(`listening on port 5001}`));
+    httpServer.listen(5001, "gms.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
 
