@@ -1,8 +1,8 @@
 const https = require('https');
 const fs = require('fs')
 const serverOpts = {
-    key: fs.readFileSync("/etc/letsencrypt/live/socket.pesatto.com/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/socket.pesatto.com/fullchain.pem")
+    key: fs.readFileSync("../certificate/privkey.pem"),
+    cert: fs.readFileSync("../certificate/fullchain.pem")
 };
 const server = https.createServer(serverOpts);
 const io = require('socket.io').listen(server);
