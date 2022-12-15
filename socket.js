@@ -7,9 +7,10 @@ const io = require('socket.io')(httpServer, {
 const device = require('./schemas/device');
 const {api} = require("./api");
 
+io.set('origins', '*:*');
+
 
 module.exports = () => {
-    io.origins('*:*')
     httpServer.listen(5001, "gms.pesatto.com",() => console.log(`listening on port 5001}`));
 
     io.on('connection', (socket) => {
