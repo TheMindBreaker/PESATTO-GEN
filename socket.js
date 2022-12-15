@@ -2,7 +2,7 @@ const app2 = require('express')();
 const fs = require('fs')
 const serverOpts = {
     key: fs.readFileSync("../certificate/privkey.pem"),
-    cert: fs.readFileSync("../certificate/fullchain.pem"),
+    cert: fs.readFileSync("../certificate/cert.pem"),
     ca: fs.readFileSync("../certificate/chain.pem")
 };
 const https = require('https').createServer(serverOpts, app2);
