@@ -2,7 +2,8 @@ const https = require('https');
 const fs = require('fs')
 const serverOpts = {
     key: fs.readFileSync("../certificate/privkey.pem"),
-    cert: fs.readFileSync("../certificate/fullchain.pem")
+    cert: fs.readFileSync("../certificate/fullchain.pem"),
+    ca: fs.readFileSync("../certificate/chain.pem")
 };
 const server = https.createServer(serverOpts);
 const io = require('socket.io')(server);
