@@ -2,7 +2,6 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
-const user = require("./schemas/user");
 const jwt = require("jsonwebtoken");
 const device = require("./schemas/device");
 const commands = require("./schemas/commands");
@@ -11,7 +10,7 @@ const models = require("./schemas/models");
 module.exports.api = (app) => {
 
 
-    app.use(morgan('dev'));
+    app.use(morgan('prod'));
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.json());
     app.use(cors({
