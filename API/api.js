@@ -5,8 +5,11 @@ const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const device = require("./schemas/device");
+const device_values = require("./schemas/device_values");
+const device_inputs = require("./schemas/device_inputs");
 const commands = require("./schemas/commands");
 const models = require("./schemas/models");
+const {ObjectId} = require("mongodb");
 const app = express();
 
 app.use(morgan('dev'));
@@ -125,6 +128,17 @@ app.get("/devices", (req, res) => {
 
 app.get("/", (req, res) => {
     res.json("Running as planned")
+})
+
+app.post("/device/values/:device", (req,res) => {
+    device_values.model.find(
+        {
+            deviceId: req.params.device,
+            UPDATED: new Date(2022, 14, 12),
+            limit: 100
+        }, (err, result) => {
+        res.json(result)
+    })
 })
 
 

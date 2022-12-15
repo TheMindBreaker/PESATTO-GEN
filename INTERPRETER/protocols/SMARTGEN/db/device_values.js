@@ -5,7 +5,9 @@ const device_data = require("../../../../SOCKET/schemas/device");
 module.exports = (params,device, logging) => {
         device_data.model.findOne({IDENTIFIER: device}, (err, div) => {
                 let data = {
-                        UPDATED: Date.now(),
+                        UPDATED: Date.now().toLocaleString('en-US', {
+                                timeZone: 'America/Mexico_City',
+                        }),
                         deviceId: div._id,
                         CALL: params.toString(),
                         MAIN_AU: params[0],
