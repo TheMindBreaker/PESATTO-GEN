@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
-const io = require('socket.io')(httpServer, { origins: '*:*'});
+const io = require('socket.io')(httpServer, { origins: 'http://localhost:4200'});
 const device = require('./schemas/device');
 const {api} = require("./api");
 
