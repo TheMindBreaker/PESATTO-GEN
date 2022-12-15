@@ -10,11 +10,11 @@ const models = require("./schemas/models");
 module.exports.api = (app) => {
 
 
-    app.use(morgan('prod'));
+    app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.json());
     app.use(cors({
-        origin: '*'
+        origin: 'localhost:4200'
     }));
 
 
