@@ -66,12 +66,16 @@ module.exports = (params,device, logging) => {
                         CONTROLLER_MODEL: params[71]
                 }
                 let values = new device_values.model(data);
-
-                values.save().then(r => {
-                        device_data.model.findOneAndUpdate({_id:div._id}, {DEVICE_VALUE:data} ,(err,result) => {
-                                //console.log(result);
+                try {
+                        values.save().then(r => {
+                                device_data.model.findOneAndUpdate({_id:div._id}, {DEVICE_VALUE:data} ,(err,result) => {
+                                        //console.log(result);
+                                });
                         });
-                });
+                } catch (e) {
+                        logging.warn(e);
+                }
+
         })
 
 }
