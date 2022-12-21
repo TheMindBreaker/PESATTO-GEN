@@ -57,8 +57,8 @@ function init(params, logging, socket, callback) {
                         offline_rate: 15,
                         data_mode:1,
                         moduletype:"HGM6120N",
-                        modulePort:4,
-                        moduleBaud:params.params.moduleBaud,
+                        modulePort:docs[0].MODULE_PORT,
+                        moduleBaud:docs[0].MODULE_BAUD,
                     },
                 retcode: "000000"
             };
