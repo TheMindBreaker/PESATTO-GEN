@@ -9,7 +9,6 @@ module.exports = (params,device, logging) => {
                                 timeZone: 'America/Mexico_City',
                         }),
                         deviceId: div._id,
-                        CALL: params.toString(),
                         MAIN_AU: params[0],
                         MAIN_AB: params[1],
                         MAIN_AC: params[2],
