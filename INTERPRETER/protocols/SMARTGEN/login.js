@@ -36,7 +36,9 @@ function init(params, logging, socket, callback) {
                 LAST_SOCKET: socket.remotePort,
                 LAST_IP:socket.remoteAddress,
                 LAST_CON: Date.now(),
-                STATUS: true
+                STATUS: true,
+                LATITUDE:params.params.latitude,
+                LONGITUDE:params.params.longitude
             })
 
             logging.info("DEVICE CONNECTED TO SERVER AS ",docs[0].IDENTIFIER)
