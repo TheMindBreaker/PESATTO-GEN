@@ -6,6 +6,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const device = require("./schemas/device");
 const device_values = require("./schemas/device_values");
+const users = require("./schemas/user");
 const device_inputs = require("./schemas/device_inputs");
 const commands = require("./schemas/commands");
 const models = require("./schemas/models");
@@ -142,6 +143,42 @@ app.post("/device/values/:device", (req,res) => {
     })
 })
 
+/* USERS */
+
+app.get('/list/users', (request, response) => {
+    users.model.find((err, result) => {
+        response.json(result)
+    })
+})
+
+app.get('/list/devices', (request, response) => {
+    device.model.find((err, result) => {
+        response.json(result)
+    })
+})
+
+app.get('/find/user/:id', (req, response) => {
+    let _id = req.params.id;
+    users.model.findById(_id, (err, result) => {
+        response.json(result)
+    })
+})
+
+app.post('/new/user', (request, response) => {
+    let user = {
+        name: request.body.name,
+        email: request.body.email,
+        password: request.body.password,
+        devices: [request.body.device],
+        role: request.body.role
+    }
+    users.model.create(user,(err, result) => {
+        if (result) {
+            response.json(result)
+        }
+    })
+    
+})
 
 app.listen(5000, config.server.hostname, () => {
     console.log("API is LISTENING AT " + config.server.apiPort);
