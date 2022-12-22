@@ -36,6 +36,7 @@ server.on("connection", (socket) => {
                             log.info("LOGIN FROM : ", socket.remotePort)
                             log.info(response)
                         }
+                        log.info('LOGIN DATA: ', socket.remotePort, " //// ", response)
                         socket.write(JSON.stringify(response.message))
                     })
                     break
