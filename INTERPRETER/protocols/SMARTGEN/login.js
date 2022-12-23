@@ -36,7 +36,9 @@ function init(params, logging, socket, callback) {
                 LAST_SOCKET: socket.remotePort,
                 LAST_IP:socket.remoteAddress,
                 LAST_CON: Date.now(),
-                STATUS: true
+                STATUS: true,
+                LATITUDE:params.params.latitude,
+                LONGITUDE:params.params.longitude
             })
 
             logging.info("DEVICE CONNECTED TO SERVER AS ",docs[0].IDENTIFIER)
@@ -53,12 +55,12 @@ function init(params, logging, socket, callback) {
                         realTime: new Date().getTime(),
                         para_command: "01030000005045F6;0101000000503C36",
                         con_command: "01030000005045F6;0101000000503C36",
-                        online_rate: 15,
-                        offline_rate: 15,
+                        online_rate: 5,
+                        offline_rate: 5,
                         data_mode:1,
                         moduletype:"HGM6120N",
-                        modulePort:4,
-                        moduleBaud:params.params.moduleBaud,
+                        modulePort:docs[0].MODULE_PORT,
+                        moduleBaud:docs[0].MODULE_BAUD,
                     },
                 retcode: "000000"
             };

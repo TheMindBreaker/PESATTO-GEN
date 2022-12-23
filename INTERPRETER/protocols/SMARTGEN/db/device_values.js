@@ -5,9 +5,7 @@ const device_data = require("../../../../SOCKET/schemas/device");
 module.exports = (params,device, logging) => {
         device_data.model.findOne({IDENTIFIER: device}, (err, div) => {
                 let data = {
-                        UPDATED: Date.now().toLocaleString('en-US', {
-                                timeZone: 'America/Mexico_City',
-                        }),
+                        UPDATED: Date.now(),
                         deviceId: div._id,
                         CALL: params.toString(),
                         MAIN_AU: params[0],
@@ -66,12 +64,16 @@ module.exports = (params,device, logging) => {
                         CONTROLLER_MODEL: params[71]
                 }
                 let values = new device_values.model(data);
-
-                values.save().then(r => {
-                        device_data.model.findOneAndUpdate({_id:div._id}, {DEVICE_VALUE:data} ,(err,result) => {
-                                //console.log(result);
+                try {
+                        values.save().then(r => {
+                                device_data.model.findOneAndUpdate({_id:div._id}, {DEVICE_VALUE:data} ,(err,result) => {
+                                        //console.log(result);
+                                });
                         });
-                });
+                } catch (e) {
+                        logging.warn(e);
+                }
+
         })
 
 }
