@@ -110,6 +110,15 @@ app.get("/device/command/:model", (req, res) => {
     })
 })
 
+app.post("/create/device",(request, response) => {
+    let device = {
+        ALIAS: request.body.alias,
+        PASSWORD: request.body.password
+    }
+
+    console.log(device)
+})
+
 app.post("/device/command/:model", (req, res) => {
     let model = new models.model({
         MODEL: req.params.model,
@@ -169,9 +178,10 @@ app.post('/new/user', (request, response) => {
         name: request.body.name,
         email: request.body.email,
         password: request.body.password,
-        devices: [request.body.device],
+        devices: request.body.device,
         role: request.body.role
     }
+
     users.model.create(user,(err, result) => {
         if (result) {
             response.json(result)
@@ -179,6 +189,46 @@ app.post('/new/user', (request, response) => {
     })
     
 })
+
+app.put('/update/user/:_id', (req, res) => {
+    
+
+
+    let update = {
+     name : req.body.name,
+     email : req.body.email,
+     password : req.body.password,
+     devices : req.body.device,
+     role : req.body.role,
+    }
+
+    console.log(update)
+
+    users.model.updateOne({_id:req.params._id},update, (err, result) => {
+        if (err) {
+            res.json(err)
+        } else {
+            res.json(result)
+        }
+    })
+
+})
+
+app.delete('/delete/user/:_id', (request, response) => {
+    let _id = request.params._id;
+    users.model.deleteOne({_id}, (err, result) => {
+        if (err) {
+            console.log(result)
+            response.json(err)
+        } else {
+            console.log(result)
+            response.json(result)
+        }
+    })
+})
+
+
+
 
 app.listen(5000, config.server.hostname, () => {
     console.log("API is LISTENING AT " + config.server.apiPort);
