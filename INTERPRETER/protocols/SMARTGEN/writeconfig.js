@@ -3,7 +3,7 @@ let response = {
     message:{method: "LongCon",message: "OK",retcode: "000000"},
     success: true
 }
-const commands = require('../../../SOCKET/schemas/commands');
+const commands = require('../../../schemas/commands');
 
 function init(params, logging, callback) {
     logging.warn(params)

@@ -1,5 +1,5 @@
 const net = require("net");
-const config = require("../../SOCKET/config.json");
+const config = require("../../config.json");
 let server = net.createServer();
 
 const SimpleNodeLogger = require('simple-node-logger'),
@@ -16,7 +16,7 @@ const writeConfig = require("./SMARTGEN/writeconfig");
 const hb = require("./SMARTGEN/hb");
 
 
-const commands = require("../schemas/commands");
+const commands = require("../../schemas/commands");
 
 log.setLevel("all")
 let clients = {};

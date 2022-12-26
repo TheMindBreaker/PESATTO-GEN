@@ -1,5 +1,5 @@
-const device = require('../../../SOCKET/schemas/device');
-const config = require('../../../SOCKET/config.json');
+const device = require('../../../schemas/device');
+const config = require('../../../config.json');
 let response = {
     device:"",
     message:"",
@@ -58,7 +58,7 @@ function init(params, logging, socket, callback) {
                         online_rate: 5,
                         offline_rate: 5,
                         data_mode:1,
-                        moduletype:"HGM6120N",
+                        moduletype:"HGM6120",
                         modulePort:docs[0].MODULE_PORT,
                         moduleBaud:docs[0].MODULE_BAUD,
                     },

@@ -1,5 +1,5 @@
-const device_inputs = require("../../../../SOCKET/schemas/device_inputs");
-const device_data = require("../../../../SOCKET/schemas/device");
+const device_inputs = require("../../../../schemas/device_inputs");
+const device_data = require("../../../../schemas/device");
 
 
 module.exports = (params, device, logging) => {
