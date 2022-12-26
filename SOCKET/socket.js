@@ -5,7 +5,7 @@ const https = require('http');
 
 const server = https.createServer(app2);
 const io = require('socket.io')(server,{cors: {origin: "*"}});
-const device = require('./schemas/device');
+const device = require('../schemas/device');
 server.listen(config.server.socketPort, config.server.hostname, () => console.log('SOCKET is LISTENING AT ' + config.server.socketPort));
 
 io.on('connection', (socket) => {

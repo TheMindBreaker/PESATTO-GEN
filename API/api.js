@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const device = require("./schemas/device");
-const device_values = require("./schemas/device_values");
-const users = require("./schemas/user");
-const device_inputs = require("./schemas/device_inputs");
-const commands = require("./schemas/commands");
-const models = require("./schemas/models");
+const device = require("../schemas/device");
+const device_values = require("../schemas/device_values");
+const users = require("../schemas/user");
+const device_inputs = require("../schemas/device_inputs");
+const commands = require("../schemas/commands");
+const models = require("../schemas/models");
 const {ObjectId} = require("mongodb");
 const app = express();
 
@@ -25,7 +25,7 @@ app.delete("/auth/sign-out", (req, res) => {
     res.json({token: "", success: true})
 })
 app.post("/auth/sign-up", (req, res) => {
-    let user = require('./schemas/user');
+    let user = require('../schemas/user');
     user.model({
         name: req.body.fullName,
         password: req.body.password,
