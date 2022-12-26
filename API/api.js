@@ -230,7 +230,7 @@ app.delete('/delete/user/:_id', (request, response) => {
 
 
 
-app.listen(5000, config.server.hostname, () => {
+app.listen(config.server.apiPort, config.server.hostname, () => {
     console.log("API is LISTENING AT " + config.server.apiPort);
 });
 
