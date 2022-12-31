@@ -25,8 +25,7 @@ app.delete("/auth/sign-out", (req, res) => {
     res.json({token: "", success: true})
 })
 app.post("/auth/sign-up", (req, res) => {
-    let user = require('../schemas/user');
-    user.model({
+    users.model({
         name: req.body.fullName,
         password: req.body.password,
         email: req.body.email
@@ -50,9 +49,7 @@ app.post("/auth/sign-up", (req, res) => {
     });
 })
 app.post("/auth/sign-in", (req, res) => {
-    let user = require('./schemas/user');
-
-    user.model.findOne({email: req.body.email}, (err, result) => {
+    users.model.findOne({email: req.body.email}, (err, result) => {
         if (result) {
             if (result.password == req.body.password) {
                 jwt.sign({
